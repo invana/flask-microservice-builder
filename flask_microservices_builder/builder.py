@@ -158,7 +158,7 @@ class MicroServiceBuilder(object):
         if len(error_packages) > 0:
             logging.error("api_views.py doesn't exist in the packages : {}".format(error_packages))
         else:
-            logging.INFO("All good with api_views.py; exist in all packages")
+            logging.info("All good with api_views.py; exist in all packages")
 
         # TODO - Check if api_views has api_blueprint that we can import into main application
         # TODO -Check if add_resource is used to add any route to the blue print
