@@ -114,8 +114,7 @@ class MicroServiceBuilder(object):
         logging.info("all_requirements {}".format(all_requirements))
         requirements_fp = open("{}/requirements.txt".format(self.BUILD_FOLDER), "w")
         for req in all_requirements:
-            if "invana-db" not in req:
-                self.write_line(requirements_fp, req)
+            self.write_line(requirements_fp, req)
 
     def generate_release_notes(self, ):
         logging.info("Generating the release notes")
