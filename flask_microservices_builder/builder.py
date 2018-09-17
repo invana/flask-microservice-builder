@@ -89,16 +89,18 @@ class MicroServiceBuilder(object):
     def write_app(self, packages_list):
         app_fp = open("{}/app.py".format(self.BUILD_FOLDER), "w")
         self.write_line(app_fp, "from flask import Flask")
+        self.write_line(app_fp, "from flask_restplus import Resource, Api, Namespace")
         for package_name in packages_list:
             self.write_line(app_fp,
-                            "from {}.api_views import api_blueprint as {}_api_blueprint".format(package_name,
+                            "from {}.api_views import api_namespace as {}_api_namespace".format(package_name,
                                                                                                 package_name))
 
         self.write_line(app_fp, "")
         self.write_line(app_fp, "if __name__ == '__main__':")
         self.write_line(app_fp, "\tapp = Flask(__name__)")
+        self.write_line(app_fp, "\tapi = Api(app, )")
         for package_name in packages_list:
-            self.write_line(app_fp, "\tapp.register_blueprint({}_api_blueprint)".format(package_name))
+            self.write_line(app_fp, "\tapi.add_namespace({}_api_namespace)".format(package_name))
         self.write_line(app_fp, "\tapp.run()")
 
     def create_dockerfile(self, ):
