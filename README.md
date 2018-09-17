@@ -8,7 +8,7 @@ a standard way of writing the microservices with `microservices.json` input
 are aggregated and a release notes with deployed commit Ids is added to
 the deployment.
 
-**This project is under active development**
+**NOTE: This project is under active development**
 
 ```
 pip install git+https://github.com/invana/flask-microservice-builder#egg=flask_microservices_builder
