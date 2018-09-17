@@ -61,7 +61,7 @@ class MicroServiceBuilder(object):
 
     def clone_microservices(self):
         packages_to_clone = self.packages_data['microservices']
-        packages_to_clone.update(self.packages_data['dependencies'])
+        packages_to_clone.update(self.packages_data.get('dependencies', {}))
 
         for git_url, commit_id in packages_to_clone.items():
             logging.info("Cloning the git_url: {}".format(git_url))
@@ -72,7 +72,7 @@ class MicroServiceBuilder(object):
         packages_list = []
         requirements_files_list = []
         packages_to_clone = self.packages_data['microservices']
-        packages_to_clone.update(self.packages_data['dependencies'])
+        packages_to_clone.update(self.packages_data.get('dependencies', {}))
         for git_url, commit_id in packages_to_clone.items():
             repo_name = git_url.split("/")[1]
             package_cloned_folder = "{}/{}".format(self.CLONE_FOLDER, repo_name)
