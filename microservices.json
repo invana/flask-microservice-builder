@@ -1,0 +1,7 @@
+{
+  "package_name": "flask microservices builder",
+  "package_version": "beta",
+  "microservices": {
+    "git@github.com:invana/flask-microservices-example": "latest"
+  }
+}
