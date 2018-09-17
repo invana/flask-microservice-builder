@@ -60,7 +60,10 @@ class MicroServiceBuilder(object):
         fp.write("{}\n".format(line))
 
     def clone_microservices(self):
-        for git_url, commit_id in self.packages_data['microservices'].items():
+        packages_to_clone = self.packages_data['microservices']
+        packages_to_clone.update(self.packages_data['dependencies'])
+
+        for git_url, commit_id in packages_to_clone.items():
             logging.info("Cloning the git_url: {}".format(git_url))
             repo_name = git_url.split("/")[1]
             Repo.clone_from(git_url, "{}/{}".format(self.CLONE_FOLDER, repo_name))
@@ -68,7 +71,9 @@ class MicroServiceBuilder(object):
     def create_build(self):
         packages_list = []
         requirements_files_list = []
-        for git_url, commit_id in self.packages_data['microservices'].items():
+        packages_to_clone = self.packages_data['microservices']
+        packages_to_clone.update(self.packages_data['dependencies'])
+        for git_url, commit_id in packages_to_clone.items():
             repo_name = git_url.split("/")[1]
             package_cloned_folder = "{}/{}".format(self.CLONE_FOLDER, repo_name)
             setup_file = "{}/setup.py".format(package_cloned_folder)
@@ -109,7 +114,8 @@ class MicroServiceBuilder(object):
         logging.info("all_requirements {}".format(all_requirements))
         requirements_fp = open("{}/requirements.txt".format(self.BUILD_FOLDER), "w")
         for req in all_requirements:
-            self.write_line(requirements_fp, req)
+            if "invana_db" not in req:
+                self.write_line(requirements_fp, req)
 
     def generate_release_notes(self, ):
         logging.info("Generating the release notes")
